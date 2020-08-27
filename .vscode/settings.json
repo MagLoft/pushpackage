@@ -1,0 +1,6 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.enable": true,
+  "json.format.enable": true
+}
