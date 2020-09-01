@@ -1,0 +1,10 @@
+{
+  "websiteName": "MagLoft",
+  "websitePushID": "web.dev.magloft.pwa",
+  "allowedDomains": [
+    "https://pwa.magloft.dev"
+  ],
+  "urlFormatString": "https://pwa.magloft.dev/%@/%@",
+  "authenticationToken": "0000000100000000",
+  "webServiceURL": "https://api.magloft.dev/pwa/push"
+}

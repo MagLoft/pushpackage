@@ -1,6 +1,7 @@
 /.vscode/
 /node_modules/
 /fixtures/
+/.ignore/
 .DS_Store
 yarn.lock
 tsconfig.json

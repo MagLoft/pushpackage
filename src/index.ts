@@ -1,8 +1,6 @@
 import * as forge from 'node-forge'
 import * as archiver from 'archiver'
 import { createHash } from 'crypto'
-import { Writable } from 'stream'
-import { arch } from 'os'
 
 declare module 'node-forge' {
   namespace pkcs7 {
@@ -58,7 +56,8 @@ export function create(entries: PushPackageEntry[], options: SignOptions) {
   archive.append(manifestBuffer, { name: 'manifest.json' })
 
   const signature = sign(manifestBuffer, options)
-  archive.append(signature, { name: 'signature' })
+  const buffer = Buffer.from(signature, 'binary')
+  archive.append(buffer, { name: 'signature' })
   return archive
 }
 

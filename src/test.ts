@@ -1,14 +1,16 @@
-import { readFileSync, createWriteStream } from 'fs'
+import { readFileSync, createWriteStream, writeFileSync } from 'fs'
 import * as pushpackage from '.'
 
 async function main() {
   // Prepare Options
-  const pem = readFileSync('fixtures/certificate.pem', 'utf8')
-  const options = { pem }
+  const pem = readFileSync('fixtures/certificates/certificate.pem', 'utf8')
+  const crt = readFileSync('fixtures/certificates/certificate.crt', 'utf8')
+  const key = readFileSync('fixtures/certificates/certificate.key', 'utf8')
+  const content = readFileSync('fixtures/pushpackage/manifest.json')
 
   // Sign Manifest
-  const content = readFileSync('fixtures/manifest.json')
-  const signature = pushpackage.sign(content, options)
+  writeFileSync('fixtures/pushpackage/signature.pem.bin', pushpackage.sign(content, { pem }), 'binary')
+  writeFileSync('fixtures/pushpackage/signature.crt.bin', pushpackage.sign(content, { key, crt }), 'binary')
 
   // Create Push Package
   const output = createWriteStream('fixtures/output.pushPackage')
@@ -16,7 +18,7 @@ async function main() {
     { name: 'sample.txt', buffer: Buffer.from('awesome') },
     { name: 'sample2.txt', buffer: Buffer.from('hello world') }
   ]
-  await pushpackage.pipe(entries, output, options)
+  await pushpackage.pipe(entries, output, { key, crt })
 }
 
 main()
